@@ -8,4 +8,6 @@ import lombok.Setter;
 public class IdeaVersion {
     @JacksonXmlProperty(localName="since-build", isAttribute = true)
     private String sinceBuild;
+    @JacksonXmlProperty(localName="until-build", isAttribute = true)
+    private String untilBuild;
 }
