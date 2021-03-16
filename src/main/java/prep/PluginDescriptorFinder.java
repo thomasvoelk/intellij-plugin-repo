@@ -10,7 +10,7 @@ import java.util.zip.ZipInputStream;
 public class PluginDescriptorFinder {
     public PluginDescriptor find(File plugin) {
         try {
-            ZipInputStream zip = positionStreamAtFile(new FileInputStream(plugin), "META-INF/plugin.xml");
+            ZipInputStream zip = positionStreamAtFile(new FileInputStream(plugin));
             XmlMapper xmlMapper = new XmlMapper();
             xmlMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
             return xmlMapper.readValue(zip, PluginDescriptor.class);
@@ -19,15 +19,15 @@ public class PluginDescriptorFinder {
         }
     }
 
-    public static ZipInputStream positionStreamAtFile(InputStream compressedInput, String fileName) throws IOException {
+    public static ZipInputStream positionStreamAtFile(InputStream compressedInput) throws IOException {
         ZipInputStream input = new ZipInputStream(compressedInput);
         ZipEntry entry;
         while ((entry = input.getNextEntry()) != null) {
-            if (entry.getName().equals(fileName)) {
+            if (entry.getName().equals("META-INF/plugin.xml")) {
                 return input;
             }
             if (entry.getName().endsWith(".jar")) {
-                return positionStreamAtFile(input, fileName);
+                return positionStreamAtFile(input);
             }
         }
         throw new FileNotFoundException("I could not find the plugin descriptor in the plugin file");
