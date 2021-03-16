@@ -13,8 +13,7 @@ public class PluginDescriptorFinder {
             ZipInputStream zip = positionStreamAtFile(new FileInputStream(plugin), "META-INF/plugin.xml");
             XmlMapper xmlMapper = new XmlMapper();
             xmlMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-            PluginDescriptor pluginDescriptor = xmlMapper.readValue(zip, PluginDescriptor.class);
-            return pluginDescriptor;
+            return xmlMapper.readValue(zip, PluginDescriptor.class);
         } catch (IOException ex) {
             throw new RuntimeException("unexpected error", ex);
         }
