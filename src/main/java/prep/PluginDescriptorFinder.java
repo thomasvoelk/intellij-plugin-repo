@@ -22,9 +22,9 @@ public class PluginDescriptorFinder {
 
     public static ZipInputStream positionStreamAtFile(InputStream compressedInput, String fileName) throws IOException {
         ZipInputStream input = new ZipInputStream(compressedInput);
-        ZipEntry entry = null;
-        while ( (entry = input.getNextEntry()) != null ) {
-            if(entry.getName().equals(fileName)) {
+        ZipEntry entry;
+        while ((entry = input.getNextEntry()) != null) {
+            if (entry.getName().equals(fileName)) {
                 return input;
             }
             if (entry.getName().endsWith(".jar")) {
