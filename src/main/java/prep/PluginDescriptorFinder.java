@@ -27,7 +27,7 @@ public class PluginDescriptorFinder {
             if(entry.getName().equals(fileName)) {
                 return input;
             }
-            if (entry.getName().endsWith(".jar")) { // TODO Better checking
+            if (entry.getName().endsWith(".jar")) {
                 return positionStreamAtFile(input, fileName);
             }
         }
