@@ -10,12 +10,11 @@ import java.util.zip.ZipInputStream;
 public class PluginDescriptorFinder {
     public PluginDescriptor find(File plugin) {
         try {
-            ZipInputStream xxx = positionStreamAtFile(new FileInputStream(plugin), "META-INF/plugin.xml");
+            ZipInputStream zip = positionStreamAtFile(new FileInputStream(plugin), "META-INF/plugin.xml");
             XmlMapper xmlMapper = new XmlMapper();
             xmlMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-            PluginDescriptor pluginDescriptor = xmlMapper.readValue(xxx, PluginDescriptor.class);
+            PluginDescriptor pluginDescriptor = xmlMapper.readValue(zip, PluginDescriptor.class);
             return pluginDescriptor;
-
         } catch (IOException ex) {
             throw new RuntimeException("unexpected error", ex);
         }
