@@ -2,13 +2,18 @@ package prep;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import org.reactivestreams.Subscriber;
+import org.springframework.stereotype.Component;
+import reactor.core.publisher.Mono;
 
 import java.io.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-public class PluginDescriptorFinder {
-    public PluginDescriptor find(File plugin) {
+@Component
+public class PluginDescriptorReader {
+
+    public PluginDescriptor read(File plugin) {
         try {
             ZipInputStream zip = seekPluginDescriptor(new FileInputStream(plugin));
             XmlMapper xmlMapper = new XmlMapper();
@@ -34,5 +39,9 @@ public class PluginDescriptorFinder {
             }
         }
         throw new FileNotFoundException("I could not find the plugin descriptor in the plugin file");
+    }
+
+    public Mono<PluginDescriptor> read2(File file) {
+        return Mono.just(read(file));
     }
 }

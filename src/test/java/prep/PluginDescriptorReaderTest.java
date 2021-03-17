@@ -7,13 +7,13 @@ import java.io.File;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-class PluginDescriptorFinderTest {
+class PluginDescriptorReaderTest {
 
     @Test
     void findsPluginDescriptorInPluginWithoutDependencies() {
         File plugin = new File(getClass().getClassLoader().getResource("NyanProgressBar.jar").getFile());
 
-        PluginDescriptor pluginDescriptor = new PluginDescriptorFinder().find(plugin);
+        PluginDescriptor pluginDescriptor = new PluginDescriptorReader().read(plugin);
 
         assertThat(pluginDescriptor.getId(), is("some.awesome"));
         assertThat(pluginDescriptor.getVersion(), is("1.14"));
@@ -25,7 +25,7 @@ class PluginDescriptorFinderTest {
     void findsPluginDescriptorInPluginDependencies() {
         File plugin = new File(getClass().getClassLoader().getResource("lombok-plugin.zip").getFile());
 
-        PluginDescriptor pluginDescriptor = new PluginDescriptorFinder().find(plugin);
+        PluginDescriptor pluginDescriptor = new PluginDescriptorReader().read(plugin);
 
         assertThat(pluginDescriptor.getId(), is("Lombook Plugin"));
         assertThat(pluginDescriptor.getVersion(), is("0.34.1-2019.1"));
