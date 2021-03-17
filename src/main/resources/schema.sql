@@ -1,0 +1,1 @@
+CREATE TABLE customer (id SERIAL PRIMARY KEY, hurz VARCHAR(255));
